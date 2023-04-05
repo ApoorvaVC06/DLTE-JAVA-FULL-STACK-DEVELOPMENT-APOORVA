@@ -1,0 +1,64 @@
+--Create a table
+create table card(card_number int not null, card_holder varchar(30) not null, card_pin int not null, card_expiry date not null, card_limit int not null);
+
+--show table
+describe card;
+
+--add a constraint and set primary key-card_number
+alter table card add constraint card_pk primary key(card_number);
+
+--insert 10 records
+insert into card(card_number, card_holder, card_pin, card_expiry, card_limit) values(123456, 'apoorva', 999999, '03-03-2025', 500);
+insert into card(card_number, card_holder, card_pin, card_expiry, card_limit) values(654321, 'karthi', 666666, '02-10-2027', 100);
+insert into card(card_number, card_holder, card_pin, card_expiry, card_limit) values(789012, 'kethan', 076656, '02-11-2023', 50);
+insert into card(card_number, card_holder, card_pin, card_expiry, card_limit) values(988782, 'avinash', 891719, '09-2-2022', 510);
+insert into card(card_number, card_holder, card_pin, card_expiry, card_limit) values(345262, 'john', 738273, '02-05-2045', 510);
+insert into card(card_number, card_holder, card_pin, card_expiry, card_limit) values(765282, 'Shrinidhi', 3434, '05-04-2033', 777);
+insert into card(card_number, card_holder, card_pin, card_expiry, card_limit) values(37921, 'uthkarsh', 6767, '01-28-2021', 100);
+insert into card(card_number, card_holder, card_pin, card_expiry, card_limit) values(426784, 'laksh', 8989, '01-25-2027', 1000);
+insert into card(card_number, card_holder, card_pin, card_expiry, card_limit) values(987324, 'sakshi', 7274, '04-12-2032', 150);
+insert into card(card_number, card_holder, card_pin, card_expiry, card_limit) values(947647, 'abhishek', 452362, '12-18-2029', 250);
+
+--display the table with records
+select * from card;
+
+--update card_expiry and extend the expiry date to 2 years
+update card set card_expiry='03-03-2027' where card_expiry='03-03-2025';
+update card set card_expiry='02-10-2029' where card_expiry='02-10-2027';
+update card set card_expiry='02-11-2025' where card_expiry='02-11-2023';
+update card set card_expiry='09-2-2024' where card_expiry='09-2-2022';
+update card set card_expiry='02-05-2047' where card_expiry='02-05-2045';
+update card set card_expiry='05-04-2035' where card_expiry='05-04-2033';
+update card set card_expiry='01-28-2023' where card_expiry='01-28-2021';
+update card set card_expiry='01-25-2029' where card_expiry='01-25-2027';
+update card set card_expiry='04-12-2034' where card_expiry='04-12-2032';
+update card set card_expiry='12-18-2031' where card_expiry='12-18-2029';
+
+update card set card_number=379211 where card_holder='uthkarsh';--(card number should be of 6 digits)
+
+--create a view
+create view all_deatails as select * from card;
+create view card_details as select card_holder, card_number from card;
+create view crucial as select card_pin from card;
+
+
+--display the view
+select * from all_deatails;
+select * from card_details;
+
+--drop a view
+drop view crucial;
+
+--update a view
+create or replace view card_details as select card_holder, card_limit from card;
+--update a view with condition
+create or replace view card_details as select card_holder, card_limit from card where card_limit>=500;
+
+--diplay the updated view
+select * from card_details;
+
+--create a type
+create type data as table of varchar(255);
+
+--aggregate
+select cast(collect utl(card_holder) as data) from all_deatails;

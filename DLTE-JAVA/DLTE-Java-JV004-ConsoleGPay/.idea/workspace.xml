@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4663bbd5-9293-4402-ba16-982de29e393f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../DLTE-Database/.idea/DLTE-Database.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DLTE-Front End/DLTE-FE-FEA005-CustomerUseCase/hhhh.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DLTE-Front End/DLTE-FE-FEA005-CustomerUseCase/lll.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DLTE-Java-JV001-PersonalLoanCalculator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../DLTE-Java-JV001-PersonalLoanCalculator/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DLTE-Java-JV007-ExceptionInSlicingCustomerLoanReport/src/main/java/banking/DataEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DLTE-Java-JV007-ExceptionInSlicingCustomerLoanReport/src/main/java/banking/DataEntry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DLTE-Java-JV007-ExceptionInSlicingCustomerLoanReport/target/classes/banking/DataEntry.class" beforeDir="false" afterPath="$PROJECT_DIR$/../DLTE-Java-JV007-ExceptionInSlicingCustomerLoanReport/target/classes/banking/DataEntry.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2M88cPuIF047soxx3xA2NrhXGTu" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="ConsoleGpay" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="payment.ConsoleGpay" />
+      <module name="DLTE-Java-JV004-ConsoleGPay" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="payment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ConsoleGpay" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4663bbd5-9293-4402-ba16-982de29e393f" name="Default Changelist" comment="" />
+      <created>1677137927905</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1677137927905</updated>
+      <workItem from="1677137931566" duration="3365000" />
+      <workItem from="1677180477901" duration="143000" />
+      <workItem from="1677184345485" duration="943000" />
+      <workItem from="1677226494426" duration="832000" />
+      <workItem from="1677261314300" duration="990000" />
+      <workItem from="1677522905093" duration="665000" />
+      <workItem from="1677627870151" duration="635000" />
+      <workItem from="1678052887697" duration="2884000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="416" y="44" key="#com.intellij.ide.util.MemberChooser" timestamp="1677138782848">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="416" y="44" key="#com.intellij.ide.util.MemberChooser/0.0.1280.672@0.0.1280.672" timestamp="1677138782848" />
+    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1677636667508">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.672@0.0.1280.672" timestamp="1677636667508" />
+    <state width="1237" height="161" key="GridCell.Tab.0.bottom" timestamp="1677227333066">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1237" height="161" key="GridCell.Tab.0.bottom/0.0.1280.672@0.0.1280.672" timestamp="1677227333066" />
+    <state width="1237" height="161" key="GridCell.Tab.0.center" timestamp="1677227333065">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1237" height="161" key="GridCell.Tab.0.center/0.0.1280.672@0.0.1280.672" timestamp="1677227333065" />
+    <state width="1237" height="161" key="GridCell.Tab.0.left" timestamp="1677227333065">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1237" height="161" key="GridCell.Tab.0.left/0.0.1280.672@0.0.1280.672" timestamp="1677227333065" />
+    <state width="1237" height="161" key="GridCell.Tab.0.right" timestamp="1677227333066">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1237" height="161" key="GridCell.Tab.0.right/0.0.1280.672@0.0.1280.672" timestamp="1677227333066" />
+    <state x="349" y="166" key="com.intellij.ide.util.TipDialog" timestamp="1677261583818">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="349" y="166" key="com.intellij.ide.util.TipDialog/0.0.1280.672@0.0.1280.672" timestamp="1677261583818" />
+    <state x="91" y="42" key="new project wizard" timestamp="1677262720563">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="91" y="42" key="new project wizard/0.0.1280.672@0.0.1280.672" timestamp="1677262720563" />
+  </component>
+</project>

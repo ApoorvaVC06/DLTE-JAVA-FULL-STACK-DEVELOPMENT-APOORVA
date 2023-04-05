@@ -1,0 +1,18 @@
+create table loan(loan_number int not null, borrower_name varchar(255) not null, loan_type varchar(255) not null, amount int not null, issue_date Date not null);
+
+create table taskcustomer(customer_id int not null, customer_name varchar(255) not null, customer_email varchar(255) not null, customer_pan varchar(255) not null, customer_contact int not null, customer_pin int not null);
+
+alter table taskcustomer add primary key(customer_id);
+
+create sequence customer_seq start with 1001 increment by 1;
+
+
+alter table loan add primary key(loan_number);
+
+create sequence loan_seq start with 1 increment by 1;
+
+create table loan_mapper(cust_id int not null, loan_num int not null);
+
+alter table loan_mapper add foreign key(cust_id) references taskcustomer(customer_id);
+alter table loan_mapper add foreign key(loan_num) references loan(loan_number);
+

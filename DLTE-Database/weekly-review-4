@@ -1,0 +1,220 @@
+--table student
+create table students(register_num int not null, name varchar(255) not null, age int not null, email varchar(255) not null); 
+
+alter table students add primary key(register_num);
+
+--table adresses
+create table adresses(add_id int not null, door_no int not null, street varchar(255) not null, city varchar(255) not null, pincode int not null);
+
+alter table adresses add primary key(add_id);
+
+create sequence adress_id start with 1001 increment by 1;
+
+alter table adresses add type varchar(255) ;
+
+--table address_mapper
+create table adrress_mapper(reg_num int not null, addr_id int not null);
+
+alter table adrress_mapper add foreign key(reg_num) references students(register_num);
+alter table adrress_mapper add foreign key(addr_id) references adresses(add_id);
+
+
+--table admin
+create table admin(admin_id int not null,pass_code varchar(255) not null);
+insert into admin values(111,'appu123');
+insert into admin values(112,'karthi123');
+
+
+
+
+
+
+<div>
+  <div class="row">
+  <div class="col-lg-15 sm-2">
+      <div class="table-responsive">
+  <table class="justify-content-center  collapsetable" border="1">
+      <thead>
+      <tr>
+          <th>register_number</th><th>Student Name</th><th>Student age</th><th>Student email</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% for(Students students:information){  %>
+      <tr>
+          <td><%=students.getRegisterNumber() %></td>
+          <td><%=students.getName() %></td>
+          <td><%=students.getAge() %></td>
+          <td><%=students.getEmail() %></td>
+      </tr>
+      <%}%>
+      </tbody>
+  </table>
+  </div>
+  </div>
+  
+</div>
+</div>
+
+
+
+
+
+
+<div class="table-responsive">
+  <table class="table text-info table-striped p-2 shadow-lg text-nowrap" cellspacing="1px" cellpadding="1px">
+      <thead>
+      <tr>
+          <th>Account_Number</th><th>Account_Holder</th>
+          <th>Account_Balance</th><th>Aadhaar</th><th>PAN</th>
+          <th>Contact</th><th>Perform</th>
+      </tr>
+      </thead>
+      <tbody>
+      <core:forEach var="student" items="${information.rows}">
+          <tr>
+              <td>student.</td><td>${customer.acc_holder}</td>
+              <td>${customer.acc_bal}</td><td>${customer.aadhaar}</td><td>${customer.pan}</td>
+              <td>${customer.contact}</td>
+              <td>
+                  <a href="insertweb.jsp?id=${customer.acc_number}" class="btn btn-outline-warning">
+                      <i class="bi bi-pencil-square"></i>
+                  </a>
+                  <a class="btn btn-outline-danger">
+                      <i class="bi bi-person-x"></i>
+                  </a>
+              </td>
+          </tr>
+      </core:forEach>
+      </tbody>
+  </table>
+
+
+
+
+
+
+  <html>
+<head>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  margin-left:-5px;
+  margin-right:-5px;
+}
+
+.column {
+  flex: 50%;
+  padding: 5px;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+</style>
+</head>
+<body>
+
+<h2>Tables Side by Side</h2>
+<p>How to create side-by-side tables with CSS:</p>
+
+<div class="row">
+  <div class="column">
+    <table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Points</th>
+      </tr>
+      <tr>
+        <td>Jill</td>
+        <td>Smith</td>
+        <td>50</td>
+      </tr>
+      <tr>
+        <td>Eve</td>
+        <td>Jackson</td>
+        <td>94</td>
+      </tr>
+      <tr>
+        <td>Adam</td>
+        <td>Johnson</td>
+        <td>67</td>
+      </tr>
+    </table>
+  </div>
+  <div class="column">
+    <table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Points</th>
+      </tr>
+      <tr>
+        <td>Jill</td>
+        <td>Smith</td>
+        <td>50</td>
+      </tr>
+      <tr>
+        <td>Eve</td>
+        <td>Jackson</td>
+        <td>94</td>
+      </tr>
+      <tr>
+        <td>Adam</td>
+        <td>Johnson</td>
+        <td>67</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+<div class="container-fluid">
+    <table>
+        <thead>
+        <tr>
+            <th>AddID</th>
+            <th>Doono</th>
+            <th>street</th>
+            <th>city</th>
+            <th>pincode</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <% for (Adresses adresses:info) {%>
+        <tr>
+            <tb><%=adresses.getAddId()%></tb>
+            <tb><%=adresses.getDoorNo()%></tb>
+            <tb><%=adresses.getStreet()%></tb>
+            <tb><%=adresses.getCity()%></tb>
+            <tb><%=adresses.getPin()%></tb>
+
+        </tr>
+        <%}%>

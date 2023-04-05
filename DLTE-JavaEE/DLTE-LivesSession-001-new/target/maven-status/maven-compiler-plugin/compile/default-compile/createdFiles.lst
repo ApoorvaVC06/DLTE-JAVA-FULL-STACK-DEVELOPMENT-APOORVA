@@ -1,0 +1,4 @@
+dependency\Check.class
+dependency\Customer.class
+dependency\Loan.class
+dependency\DaoOperations.class
