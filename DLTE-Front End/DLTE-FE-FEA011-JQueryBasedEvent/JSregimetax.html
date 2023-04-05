@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        
+        $(document).ready(()=>{
+            $("body").css({background:'linear-gradient(45deg,blue,black)'})
+            $("#calculate").click(()=>{
+            const fname=$("#fullname").val()
+            const fprof=$("input[name=profession]").val()
+            const fsal=$(".salary").val()
+
+            var tax=0;
+
+            
+            
+            if(fprof=="employee"){
+                if(fsal<=25000){
+                tax=0;
+            }
+            if(fsal>25000 && fsal<=50000) {
+                tax=(fsal-25000)*10/100;
+            }
+            if(fsal>50000 && fsal<=100000) {
+                tax=(fsal-250000)*20/100;
+            }
+            if(fsal>100000){
+                tax=((fsal-100000)*30/100);
+            }
+
+            }
+            if(fprof=="self-employee"){
+                if(fsal<=25000){
+                tax=0;
+            }
+            if(fsal>25000 && fsal<=50000) {
+                tax=(fsal-25000)*10/100;
+            }
+            if(fsal>50000 && fsal<=100000) {
+                tax=(fsal-250000)*20/100;
+            }
+            if(fsal>100000){
+                tax=((fsal-100000)*30/100);
+            }
+
+            }
+            if(fprof=="business"){
+                if(fsal<=25000){
+                tax=0;
+            }
+            if(fsal>25000 && fsal<=50000) {
+                tax=(fsal-25000)*10/100;
+            }
+            if(fsal>50000 && fsal<=100000) {
+                tax=(fsal-250000)*20/100;
+            }
+            if(fsal>100000){
+                tax=((fsal-100000)*30/100);
+            }
+
+            }
+            $("output").val(fname+", "+fprof+" with salary "+fsal+" has to pay tax of "+tax)
+            })
+           
+      })
+
+    </script>
+    
+</head>
+<body>
+    <h4 class="head">Income Tax Calculator</h4>
+    <label>Name:</label><br>
+    <input type="text" id="fullname" placeholder="Enter your fullname"/><br>
+    <label>Profession:</label><br>
+    <input type="text" name="profession" placeholder="Enter your profession"/><br>
+    <label>Salary:</label><br>
+    <input type="text" class="salary" placeholder="Enter salary"/><br>
+    <input type="button" id="calculate" value="calculate"><br>
+    <output class="taxx"></output>
+
+</body>
+</html>

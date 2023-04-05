@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg bg-primary">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav m-3">
+                    <li class="nav-item">
+                       <a class="nav-link" href="#" >Help</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav m-3">
+                    <li class="nav-item">
+                       <a class="nav-link" href="#" >Sign up</a>
+                    </li>
+                </ul>
+
+                <form class="d-flex">
+                    <input type="text" class="form-control m-3" placeholder="What are you looking for?">
+                    <button type="search" class="btn btn-outline-success m-3">search</button>
+                </form>
+            </div>
+
+        </div>
+    </nav>
+    <!--marquee moving left below navbar-->
+    <div class="text-dark text-bg-warning">
+    <marquee direction="left" scrollamount="3">
+        Please remember that Bank do not ask for upi change through email and contact number
+    </marquee>
+</div>
+<div class="container-fluid bg-info">
+    <div class="row p-4">
+        <!--form to fill the customer details-->
+        <form class="card col-lg-4 p-4 rounded-5">
+            <h4 class="text-dark text-center">Customer login</h4>
+            <div class="form-group">
+                <label>Customer ID:</label>
+                <input class="form-control" type="text" placeholder="Enter Customer ID">
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input class="form-control" type="text" placeholder="Enter password">
+            </div>
+            <div class="d-flex justify-content-end mt-2">
+                <a href="#">Forgot password?</a>
+             </div>
+             <div class="d-flex justify-content-center">
+                 <a class="btn btn-outline-success m-3" type="submit" href="home.html">submit</a>
+                 <button type="reset" class="btn btn-outline-danger m-3">reset</button>
+                 
+             </div>
+        </form>
+        <img src="Mahila-Mitra_1134-x-777-pxl.jpg" class="col-lg-8">
+    </div>
+</div>
+</body>
+</html>

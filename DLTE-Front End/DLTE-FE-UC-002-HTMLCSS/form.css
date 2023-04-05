@@ -1,0 +1,34 @@
+.container{
+    width:100%;
+    height: 100vh;
+    background-color: grey,red;
+    justify-content: center;
+    align-items: center;
+    color: beige;
+}
+.title{
+    text-align: center;
+    color: aqua;
+
+}
+.child{
+   border-radius: 20px;
+   padding: 9px;
+   box-shadow: 1px 1px 40px black;
+}
+.grp{
+    display: flex;
+    justify-content: center;
+    padding: 4px;
+}
+input{
+    padding: 5px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+.row{
+    justify-content: center;
+    display: flex;
+    padding: 4px;
+}

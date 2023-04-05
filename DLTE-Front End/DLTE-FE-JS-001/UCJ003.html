@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tranacation details</title>
+</head>
+<body>
+    <script>
+        let transactionID,transactionMode,transactionType,transactionDate,transactionAmt
+
+        window.onload=function(){
+            transactionID=prompt("Enter your transaction ID:","")
+            transactionMode=prompt("Enter the mode of your transaction:","")
+            transactionType=prompt("Enter the type of your trancaction:","")
+            transactionDate=prompt("Enter the date of transcation:","")
+            transactionAmt=prompt("Enter the amount transacted(in Rs.):","")
+
+            var view=document.getElementById("show")
+            view.innerHTML="The transaction details: \nTransaction ID :"+transactionID+"\nMode of Transaction :"+transactionMode+"\nType of Transaction :"+transactionType+"\nDate of Transaction :"+transactionDate+"\nTransacted Amount(in Rs.) :"+transactionAmt
+            alert(view.innerHTML)
+        }
+    </script>
+    <p id="show">Transaction Data</p>
+</body>
+</html>
