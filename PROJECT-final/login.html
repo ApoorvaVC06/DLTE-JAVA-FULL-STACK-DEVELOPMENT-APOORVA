@@ -12,15 +12,20 @@
     body{
         background: linear-gradient(45deg,lightgray,lightskyblue);
     }
+    .background-img {  
+            min-height: 400px;  
+            background-size: cover;  
+            background-image: url("pic.jpg");  
+        }  
 </style>
 <body>
-    <div class="container-fluid ">
+    <div class="background-image">
         <marquee class="text-dark" scrollamount="3" direction="left">
             <p>Bank never asks for OTP,Password,PIN or CVV number. Please remember that bank would never ask you to verify your account information through an e-mail or Call</p>
         </marquee>
         <div class="row mt-2 p-10">
                <img class="col-lg-6" src="pic.jpg">
-           <form action="login" method="post" class="justify-content-center col-lg-4 p-4 ">
+           <form action="login" method="post" class="justify-content-center bg-light col-lg-4 p-4 ">
                 <h4 class="text-dark text-center">Customer login</h4>
                 <div class="form-group">
                     <label>Customer ID:</label>
