@@ -18,24 +18,30 @@
             background-image: url("pic.jpg");  
         }  
 </style>
+<script src="validation.js">
+
+</script>
 <body>
-    <div class="background-image">
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <img  src="Alpha_Bank_logo.svg.png" width="400px" height="100px">
+        </div>
         <marquee class="text-dark" scrollamount="3" direction="left">
             <p>Bank never asks for OTP,Password,PIN or CVV number. Please remember that bank would never ask you to verify your account information through an e-mail or Call</p>
         </marquee>
-        <div class="row mt-2 p-10">
-               <img class="col-lg-6" src="pic.jpg">
-           <form action="login" method="post" class="justify-content-center bg-light col-lg-4 p-4 ">
+        <div class="row justify-content-center mt-2 p-10">
+               <img class="col-lg-8" src="pic.jpg">
+               <form name="login" class="justify-content-center bg-light col-lg-4 p-4 ">
                 <h4 class="text-dark text-center">Customer login</h4>
-                <div class="form-group">
-                    <label>Customer ID:</label>
-                    <input name="adminId" class="form-control" type="text" placeholder="Enter Customer ID">
+                <div class="form-group mt-2">
+                    <label>Customer ID:<span id="errid"></span></label>
+                    <input name="id" class="form-control" type="text" placeholder="Enter Customer ID">
                 </div>
-                <div  class="form-group">
-                    <label>Password:</label>
+                <div  class="form-group mt-2">
+                    <label>Password: <span id="errpassword"></span></label>
                     <input name="passCode" class="form-control" type="password" placeholder="Enter password">
                 </div>
-                <div class="d-flex  m-2">
+                <div class="d-flex m-2">
                     <input class="me-2" type="checkbox" checked="checked"> Remember me  
                   <a class="ms-5" href="#">Forgot password?</a>
                 </div>
@@ -44,7 +50,6 @@
                     <button type="reset" class="btn btn-outline-danger m-3">reset</button>
                 </div>
             </form>
-    
         </div>
     </div>
 </body>

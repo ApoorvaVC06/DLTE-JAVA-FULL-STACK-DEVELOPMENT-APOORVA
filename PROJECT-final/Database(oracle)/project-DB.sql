@@ -6,8 +6,9 @@ alter table bank add constraint bank_id_seq primary key(bank_id);
 insert into bank values(BANK_ID_SEQ.nextval, 'Alpha Bank', 'Jaynagar,Ring road,Banglore-583101');
 
 
+
 --Tbale BRANCH--
-create table branch(branch_id int not null, branch_name varchar(255) not null,branch_location varchar(255) not null, branch_address varchar(255) not null,branch_ifsc varchar(255) not null, bank_id int not null); 
+create table branch(branch_id int not null, branch_name varchar(255) not null,branch_address varchar(255) not null,branch_ifsc varchar(255) not null, bank_id int not null); 
 create sequence branch_id_seq start with 101 increment by 1;
 alter table branch add constraint branch_id_seq primary key(branch_id);
 alter table branch add foreign key(bank_id) references bank(bank_id);
@@ -15,6 +16,7 @@ alter table branch add foreign key(bank_id) references bank(bank_id);
 insert into branch values(BRANCH_ID_SEQ.nextval, 'Infantry', '8th block MSC towers,Ballari-583260','ALPB86556',BANK_ID_SEQ.currval);
 insert into branch values(BRANCH_ID_SEQ.nextval, 'Avenue road', '2nd block,4th main Opposite to kaveri bhavan,Banglore-583102','ALPB86051',BANK_ID_SEQ.currval);
 insert into branch values(BRANCH_ID_SEQ.nextval, 'VijayaNagar', 'Club road 12th block,Manglore-564190','ALPB860438',BANK_ID_SEQ.currval);
+
 
 
 --Table ROLE--
@@ -32,8 +34,19 @@ insert into role values(role_id_seq.nextval, 'Official', 'Managing operations','
 insert into role values(role_id_seq.nextval, 'Admin', 'Has all privileges','active',103,'girish','giri12');
 insert into role values(role_id_seq.nextval, 'Official', 'Managing operations','active',103,'john','jo12');
 
+
 --Table loan-ADMIN--
-create table loan_scheme(loan_scheme_id int not null primary key,loan_scheme_type varchar(255) not null,loan_scheme_name varchar(255) not null,loan_scheme_desc varchar(255) not null, loan_scheme_roi float not null); 
+create table loan_scheme(loan_scheme_id int not null,loan_scheme_type varchar(255) not null,loan_scheme_name varchar(255) not null,loan_scheme_desc varchar(255) not null, loan_scheme_roi float not null); 
+create sequence loan_scheme_seq start with 5000 increment by 1;
+alter table loan_scheme add constraint loan_scheme_seq primary key(loan_scheme_id);
+
+
+insert into loan_scheme values(loan_scheme_seq.NEXTVAL, 'education loan', 'vidhyasiri','students persuing degree', 9.5);
+insert into loan_scheme values(loan_scheme_seq.NEXTVAL, 'vehicle loan', 'vahana raksa','customer having cibil>700 can apply', 6.5);
+insert into loan_scheme values(loan_scheme_seq.NEXTVAL, 'gold loan', 'siri','accepts even 18 carot gold', 11.5);
+insert into loan_scheme values(loan_scheme_seq.NEXTVAL, 'home  loan', 'ghura kshema','offers loan upto 40lakh', 5.5);
+
+
 
 --Table Customer--
 create table customer(customer_id int not null,customer_name varchar(255) not null,customer_address varchar(255) not null, customer_status varchar(255) not null, customer_contact int not null, username varchar(255) not null, password varchar(255) not null); 
@@ -46,6 +59,7 @@ insert into customer values(customer_id_seq.nextval,'Nandish','indira nagar,Gulb
 insert into customer values(customer_id_seq.nextval,'Avinash','siddharth nagar,Kolar','active',9876544561,'avi','avi12');
 
 
+
 --Table Profile--
 create table profile(profile_id int not null,profile_pan varchar(255) not null,profile_aadhaar int not null, profile_status varchar(255) not null, customer_id int not null); 
 create sequence profile_id_seq;
@@ -56,6 +70,7 @@ insert into profile values(profile_id_seq.nextval,'HYRE56802',547987654478,'acti
 insert into profile values(profile_id_seq.nextval,'NCJS86567',445677678889,'active',2);
 insert into profile values(profile_id_seq.nextval,'BSXS23456',192839438492,'active',3);
 insert into profile values(profile_id_seq.nextval,'IUEK34675',236488372989,'active',4);
+
 
 --Table Account--
 create table account(account_id int not null,account_type varchar(255) not null,account_number int not null, account_avl_balance float not null,account_status varchar(255) not null, customer_id int not null,branch_id int not null); 
@@ -76,6 +91,7 @@ insert into account values(account_id_seq.nextval,'savings',5392634974387,873822
 
 insert into account values(account_id_seq.nextval,'savings',7362837839382,2892.26,'active',4,102);
 insert into account values(account_id_seq.nextval,'savings',2362878273283,873832.882,'active',4,103);
+
 
 
 --table Tranaction--
@@ -122,6 +138,7 @@ insert into payee values(payee_id_seq.nextval,'Aruna',5392634974387,4);
 
 
 
+
 --table loan--
 create table loan(loan_App_id int not null, loan_amount float not null, loan_emi float not null,loan_scheme_id int not null,customer_id int not null); 
 create sequence loan_App_id_seq start with 90034 increment by 1;
@@ -129,4 +146,10 @@ alter table loan add constraint loan_App_id_seq primary key(loan_App_id);
 alter table loan add foreign key(customer_id) references customer(customer_id);
 alter table loan add foreign key(loan_scheme_id) references loan_scheme(loan_scheme_id);
 
+
+insert into loan values(loan_App_id_seq.NEXTVAL, 50000.00, 7800.653, 5000, 1);
+insert into loan values(loan_App_id_seq.NEXTVAL, 100000.00, 7800.653, 5002, 1);
+insert into loan values(loan_App_id_seq.NEXTVAL, 250000.00, 7800.653, 5003, 2);
+insert into loan values(loan_App_id_seq.NEXTVAL, 64000.00, 7800.653, 5001, 4);
+insert into loan values(loan_App_id_seq.NEXTVAL, 70000.00, 7800.653, 5003, 3);
 
