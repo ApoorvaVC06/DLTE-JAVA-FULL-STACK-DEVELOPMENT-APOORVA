@@ -153,3 +153,8 @@ insert into loan values(loan_App_id_seq.NEXTVAL, 250000.00, 7800.653, 5003, 2);
 insert into loan values(loan_App_id_seq.NEXTVAL, 64000.00, 7800.653, 5001, 4);
 insert into loan values(loan_App_id_seq.NEXTVAL, 70000.00, 7800.653, 5003, 3);
 
+--  "transactionFrom":4384357894567,
+--    "transactionTo":5458954578876,
+--    "transactionAmt":67865,
+--    "transactionStatus":"successful",
+--    "transactionDate":"22-04-2023"

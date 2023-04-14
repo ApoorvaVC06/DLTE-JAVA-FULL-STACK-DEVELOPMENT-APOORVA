@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <style>
+        body{
+            background: linear-gradient(45deg,lightgray,lightskyblue);
+        }
+    </style>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #0b0b0b;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="=container">
+    <div class="d-flex justify-content-center">
+        <img  src="Alpha_Bank_logo.svg.png" width="400px" height="100px">
+    </div>
+    <div class="row">
+    <div class="table-responsive col-lg-8">
+    <h2 class="text-dark">My payees</h2>
+  <table style="width: 90%; height: auto;">
+  <tr>
+    <th>Payee ID</th>
+    <th>Payee Name</th>
+    <th>Account Number</th>
+    <th>Modify</th>
+    <th>Payment</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Deepthi</td>
+    <td>2635678628373</td>
+    <td><a href="" class="btn btn-outline-warning">
+        <i class="bi bi-geo-alt-fill">Edit</i></a> </td>
+        <td><a href="transaction.html" class="btn btn-outline-success">
+            <i class="bi bi-geo-alt-fill">Transfer amount</i></a> </td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Asif</td>
+    <td>9786529456394</td>
+    <td><a href="" class="btn btn-outline-warning">
+        <i class="bi bi-geo-alt-fill">Edit</i></a> </td>
+     <td><a href="" class="btn btn-outline-success">
+         <i class="bi bi-geo-alt-fill">Transfer amount</i></a> </td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Goutham</td>
+    <td>4384357894567</td>
+    <td><a href="" class="btn btn-outline-warning">
+        <i class="bi bi-geo-alt-fill">Edit</i></a> </td>
+     <td><a href="" class="btn btn-outline-success">
+         <i class="bi bi-geo-alt-fill">Transfer amount</i></a> </td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Kethan</td>
+    <td>2362878273283</td>
+    <td><a href="" class="btn btn-outline-warning">
+        <i class="bi bi-geo-alt-fill">Edit</i></a> </td>
+     <td><a href="" class="btn btn-outline-success">
+         <i class="bi bi-geo-alt-fill">Transfer amount</i></a> </td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Faizu</td>
+    <td>5458954578876</td>
+    <td><a href="" class="btn btn-outline-warning">
+        <i class="bi bi-geo-alt-fill">Edit</i></a> </td>
+     <td><a href="" class="btn btn-outline-success">
+         <i class="bi bi-geo-alt-fill">Transfer amount</i></a> </td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Razak</td>
+    <td>2543923872387</td>
+    <td><a href="" class="btn btn-outline-warning">
+        <i class="bi bi-geo-alt-fill">Edit</i></a> </td>
+     <td><a href="" class="btn btn-outline-success">
+         <i class="bi bi-geo-alt-fill">Transfer amount</i></a> </td>
+  </tr>
+  </table>
+</div>
+<div class="col-lg-4">
+    <div class="search-container">
+        <form action="">
+          <input type="text" placeholder="Enter payee ID" name="search">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      </div>
+      <div class="card mt-4 h-70">
+     <h4 class="bg-light text-center rounded-5 m-2 shadow-lg">what's new</h4>
+     <marquee direction="up" scrollamount="3">
+    
+      1.Pay your bills online through Bharat Bill Pay System (BBPS)<br>
+      2.Insure yourself and your belongings with our Insurance products online<br>
+      3.Open Demat Account Online<br>
+      4.Apply Equity, SME and Debt IPO's and Rights Issue online<br>
+      5.Apply for Mutual Fund online.<br>
+      6.If Your Email id is not Updated/Verified with us, kindly do that. 
+     </marquee>
+    </div>
+</div>
+<div class="class="row d-flex justify-content-end p-5 m-4">
+<button class="btn btn-outline-danger m-3">Add Payee</button>
+</div> 
+</div>
+ 
+</body>
+</html>
