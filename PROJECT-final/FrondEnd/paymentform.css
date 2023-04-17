@@ -54,12 +54,7 @@
     border-radius: 3px;
     color: #333;
   }
-  .name:focus, .dob:focus{
-    -webkit-box-shadow:0 0 2px 1px #7ed32180;
-    -moz-box-shadow:0 0 2px 1px #7ed32180;
-    box-shadow: 0 0 2px 1px #7ed32180;
-    border: 1px solid #7ed321;
-  }
+ 
   .input-box .icon{
     width: 48px;
     display: flex;

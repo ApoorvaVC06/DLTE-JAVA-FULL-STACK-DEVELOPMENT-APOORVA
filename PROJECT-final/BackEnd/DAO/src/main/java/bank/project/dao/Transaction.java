@@ -16,6 +16,6 @@ public class Transaction {
     private Long transactionTo;
     private float transactionAmt;
     private String transactionStatus;
-    private String transactionDate;
+    private Date transactionDate;
 
 }

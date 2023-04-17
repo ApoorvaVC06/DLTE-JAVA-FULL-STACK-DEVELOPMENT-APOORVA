@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 @Service
 
@@ -106,18 +107,19 @@ public class BankService implements BankOperations{
 
     //to get payee details
     @Override
-    public List<Payee> getByCustId(int cust_id) {
-        List<Payee> payeeList= jdbcTemplate.query("select * from payee where customer_id=?",new PayeeMapper(),cust_id);
-        logger.info("getting payee details");
-        return  payeeList;
-    }
+    public List<Payee> listPayee(String username){
+        logger.info(" Get by username ");
+        return jdbcTemplate.query("Select * from payee join customer on customer.customer_id = payee.customer_id where customer.username=? ",new PayeeMapper(),username);
 
+    }
     @Override
     public String insert(Transaction transaction) throws ParseException {
-         String ack="inserted";
-        SimpleDateFormat fmt=new SimpleDateFormat("dd-MM-yyyy");
-        Date date = fmt.parse(transaction.getTransactionDate());
-         jdbcTemplate.update("insert into transaction values(txn_id_seq.nextval,?,?,?,?,?)",new Object[]{transaction.getTransactionFrom(),transaction.getTransactionTo(),transaction.getTransactionAmt(),transaction.getTransactionStatus(),date});
+         String ack="Transaction successful";
+         logger.info(transaction.toString());
+//        SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd");
+//        Date date = fmt.parse(transaction.getTransactionDate());
+       // String status="success";
+         jdbcTemplate.update("insert into transaction values(txn_id_seq.nextval,?,?,?,?,CURRENT_DATE )",new Object[]{transaction.getTransactionFrom(),transaction.getTransactionTo(),transaction.getTransactionAmt(),transaction.getTransactionStatus()});
          return ack;
     }
 
@@ -125,6 +127,10 @@ public class BankService implements BankOperations{
     public List<Transaction> allTransactions() {
         List<Transaction> transactionList= jdbcTemplate.query("select * from transaction",new TransactionMapper());
         return transactionList;
+    }
+
+    String getStatus(){
+        
     }
 
 //    @Override
@@ -142,7 +148,7 @@ public class BankService implements BankOperations{
 //        jdbcTemplate.update("update CUSTOMER set CUSTOMER_STATUS='Inactive' where FAILED_ATTEMPTS=3");
 //    }
 
-    class CustomersMapper implements RowMapper<Customer > {
+    static class CustomersMapper implements RowMapper<Customer > {
         @Override
         public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
             Customer customer=new Customer();
@@ -153,7 +159,7 @@ public class BankService implements BankOperations{
             customer.setCustomer_contact(rs.getLong("customer_contact"));
             customer.setUsername(rs.getString("username"));
             customer.setPassword(rs.getString("password"));
-            logger.info(customer.getCustomer_name()+" details received from database");
+            //logger.info(customer.getCustomer_name()+" details received from database");
             return customer;
         }
     }
@@ -168,7 +174,7 @@ public class BankService implements BankOperations{
             payee.setPayeeAccNum(rs.getLong("payee_account_number"));
             payee.setCustomerId(rs.getInt("customer_id"));
             logger.info(payee.getPayeeName()+" details received from payee table");
-            return null;
+            return payee;
         }
     }
 
@@ -182,7 +188,7 @@ public class BankService implements BankOperations{
             transaction.setTransactionTo(rs.getLong("txn_to"));
             transaction.setTransactionAmt(rs.getFloat("txn_amount"));
             transaction.setTransactionStatus(rs.getString("txn_status"));
-            transaction.setTransactionDate(rs.getString("trans_date"));
+            transaction.setTransactionDate(rs.getDate("trans_date"));
             logger.info(" details received from transaction table");
             return transaction;
         }

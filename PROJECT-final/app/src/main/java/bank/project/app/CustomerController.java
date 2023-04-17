@@ -62,18 +62,31 @@ public class CustomerController {
         return bankService.Login(username,password);     //get the whole object
     }
 
-    @GetMapping("/payee/{custId}")
-    public List<Payee> callgetPayee(@PathVariable("custId") int custId){
-        return bankService.getByCustId(custId);
-    }
+//    @GetMapping("/payee/{custId}")
+//    public List<Payee> callgetPayee(@PathVariable("custId") int custId){
+//        return bankService.getByCustId(custId);
+//    }
+
+//    @PostMapping("/insert")
+//    public String addTranscation(@RequestBody Transaction transaction) throws ParseException {
+//        logger.info("trying to insert");
+//        System.out.println(transaction);
+////        SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+////        Date date = fmt.parse(transaction.getTransactionDate());
+////        System.out.println(date);
+//        return bankService.insert(transaction);
+//    }
 
     @PostMapping("/insert")
-    public String addTranscation(@RequestBody Transaction transaction) throws ParseException {
+    public String addTranscation(@RequestParam("Payeeacc") Long payeeaccno,@RequestParam("Accnum") Long accnum,@RequestParam("Amount") Float amount) throws ParseException {
+       logger.info("in rest controller inside trans insert ");
+        Transaction transaction=new Transaction();
+        transaction.setTransactionFrom(accnum);
+        transaction.setTransactionTo(payeeaccno);
+        transaction.setTransactionAmt(amount);
+        transaction.setTransactionStatus("successful");
+       // transaction.setTransactionDate(String.valueOf(date));
         logger.info("trying to insert");
-        System.out.println(transaction);
-//        SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
-//        Date date = fmt.parse(transaction.getTransactionDate());
-//        System.out.println(date);
         return bankService.insert(transaction);
     }
 

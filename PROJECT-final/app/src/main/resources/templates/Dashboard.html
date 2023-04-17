@@ -8,6 +8,43 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        var soapRequest="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:soap=\"http://soap.app.project.bank\">\n"+
+            "<soapenv:Header/>\n"+
+            "<soapenv:Body>\n"+
+            "<soap:listPayeeRequest/>\n"+
+            "</soapenv:Body>\n"+
+            "</soapenv:Envelope>"
+        $(document).ready(()=>{
+            $.ajax({
+                url: "http://localhost:8083/listpayee",
+                type: "POST",
+                dataType: "xml",
+//processData: false,
+                contentType: "text/xml;charset=\"UTF-8\"",
+                data: soapRequest,
+                success: (data) => {
+                    $(data).find('ns2\\:payee').each(function() {
+                        var payeeId = $(this).find('ns2\\:payeeId').text();
+                        var payeeName = $(this).find('ns2\\:payeeName').text();
+                        var payeeAccNum = $(this).find('ns2\\:payeeAccNum').text();
+                        var customerId = $(this).find('ns2\\:customerId').text();
+                        // var customerId = $(this).find('ns2\\:customerId').text();
+                        $("tbody").append("<tr><td>"+payeeId+"</td><td>"+payeeName+"</td><td>"+payeeAccNum+"</td><td>"+customerId+"</td></tr>");
+                    });
+
+
+                },
+                error:()=>{
+                    alert("error")
+                }
+            });
+
+
+        })
+
+    </script>
     <style>
         body{
             background: linear-gradient(45deg,lightgray,lightskyblue);
@@ -40,22 +77,17 @@
         <div class="table-responsive mt-3 col-lg-6 ms-3">
             <h2 class="mb-2 text-dark">My payees</h2>
             <table style="width: 90%; height: auto;">
+                <thead>
                 <tr>
                     <th>Payee ID</th>
                     <th>Payee Name</th>
                     <th>Account Number</th>
+                    <th>Customer Id</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Deepthi</td>
-                    <td>2635678628373</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Asif</td>
-                    <td>9786529456394</td>
+                </thead>
+                <tbody>
 
-                </tr>
+                </tbody>
             </table>
 
             <button type="button" id="update" class="btn btn-outline-danger m-3">update</button>

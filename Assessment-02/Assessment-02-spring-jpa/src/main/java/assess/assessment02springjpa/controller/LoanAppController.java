@@ -22,6 +22,6 @@ public class LoanAppController {
     public LoansApp LoansAppcallingUpdateReject(@RequestBody LoansApp loansApp){
         return loansAppService.implementupdateReject(loansApp);
     }
-    @GetMapping("/rejected/{}")
-    public List<LoansApp> LoanAppcallingLIist(@PathVariable  )
+    @GetMapping("/rejected")
+    public List<LoansApp> LoanAppcallingLIist(@PathVariable String status)
 }

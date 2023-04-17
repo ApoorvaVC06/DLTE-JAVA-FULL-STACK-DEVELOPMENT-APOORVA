@@ -12,7 +12,7 @@ public interface BankOperations {
 //    int decrementAttempts(int id);
 //    void setAttempts(int id);
 //    void updateStatus();
-    List<Payee> getByCustId(int cust_id);
+    public List<Payee> listPayee(String username);
     String insert(Transaction transaction) throws ParseException;
     List<Transaction> allTransactions();    }
 
