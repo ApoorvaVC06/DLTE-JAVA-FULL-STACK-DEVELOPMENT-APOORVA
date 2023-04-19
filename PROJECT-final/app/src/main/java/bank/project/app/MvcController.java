@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/web")
 
 public class MvcController {
-    @GetMapping("/log")
+    @GetMapping("/login")
     public String login(){
         return "login";
 }
@@ -20,4 +20,11 @@ public class MvcController {
     public String dashboardPage(){return "Dashboard";}
 
     @GetMapping("/pay")
-    public String payment(){return "Payment";}}
+    public String Payment(){return "Payment";}
+
+    @GetMapping("/add")
+    public String addPayee(){return "addPayee";}
+
+    @GetMapping("/update")
+    public String update(){return "update";}}
+

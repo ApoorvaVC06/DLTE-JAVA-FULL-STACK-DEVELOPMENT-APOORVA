@@ -3,30 +3,21 @@ package bank.project.dao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 @Service
-
-public class BankService implements BankOperations{
+public class BankService implements BankOperations, UserDetailsService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -44,6 +35,7 @@ public class BankService implements BankOperations{
         return customer;
     }
 
+    //Login service before adding secrity
     @Override
     public String Login(String username, String password) {
         try {
@@ -60,11 +52,11 @@ public class BankService implements BankOperations{
                      int attempts= getAttempts(customer.getCustomer_id());
                       if(attempts==2) {
                           logger.info(resourceBundle.getString("two"));
-                          return resourceBundle.getString("wrongpass");
+                          return resourceBundle.getString("wrongPass");
                       }
                       else if(attempts==1){
                           logger.info(resourceBundle.getString("one"));
-                          return resourceBundle.getString("wrongpass");
+                          return resourceBundle.getString("wrongPass");
                       }
                       else{
                           updateStatus();
@@ -84,71 +76,84 @@ public class BankService implements BankOperations{
         }
     }
 
-
+    //get the number of login attempts left for the logged customer
     public int getAttempts(int id) {
         int attempts=jdbcTemplate.queryForObject("select attempts from customer where customer_id=?",Integer.class,id);
         return attempts;
     }
-
+    //decrement attempts for wrong credentials
     public void decrementAttempts(int id) {
        jdbcTemplate.update("update customer set attempts=attempts-1 where customer_id=?", id);
     }
 
 
+    //set attempts as 3 for successful login
     public void setAttempts(int id) {
         jdbcTemplate.update("update customer set attempts=3 where customer_id=?",id);
     }
 
+
+    //make satus as inactive after
     public void updateStatus() {
          jdbcTemplate.update("update customer set customer_status='Inactive' where attempts=0");
     }
 
 
-
-    //to get payee details
+    //to get payee details from DB
     @Override
     public List<Payee> listPayee(String username){
         logger.info(" Get by username ");
         return jdbcTemplate.query("Select * from payee join customer on customer.customer_id = payee.customer_id where customer.username=? ",new PayeeMapper(),username);
-
     }
+
+
+    //insert into Transaction table- make a new payment
     @Override
-    public String insert(Transaction transaction) throws ParseException {
-         String ack="Transaction successful";
-         logger.info(transaction.toString());
-//        SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd");
-//        Date date = fmt.parse(transaction.getTransactionDate());
-       // String status="success";
-         jdbcTemplate.update("insert into transaction values(txn_id_seq.nextval,?,?,?,?,CURRENT_DATE )",new Object[]{transaction.getTransactionFrom(),transaction.getTransactionTo(),transaction.getTransactionAmt(),transaction.getTransactionStatus()});
-         return ack;
+    public String newPayment(Transaction transaction){
+        String acknowledgment="Transaction successful in DB";
+//         logger.info(transaction.toString());
+//          Double balance= getbalance(transaction.getTransactionFrom());
+//         if (balance<transaction.getTransactionAmt()){              //check balance
+//             return resourceBundle.getString("noBalance");
+//         }
+//         else {
+//             Double newBalance=balance-transaction.getTransactionAmt();
+             jdbcTemplate.update("insert into transaction values(txn_id_seq.nextval,?,?,?,?,CURRENT_DATE )", new Object[]{transaction.getTransactionFrom(), transaction.getTransactionTo(), transaction.getTransactionAmt(), transaction.getTransactionStatus()});
+//             updateBalance(newBalance,transaction.getTransactionFrom());        //update new balance
+//             if(ack!=1){
+//             return "Failed";}
+//         }
+         return acknowledgment;
     }
 
+
+    //list all the transactions
     @Override
     public List<Transaction> allTransactions() {
         List<Transaction> transactionList= jdbcTemplate.query("select * from transaction",new TransactionMapper());
         return transactionList;
     }
 
-    String getStatus(){
-        
+    //get the account balance of sender
+    Double getbalance(long transFrom){
+       return jdbcTemplate.queryForObject("select ACCOUNT_AVL_BALANCE from ACCOUNT where account_number=?",Double.class,transFrom);
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        Customer customer= getByUsername(username);
-//        if(customer == null){
-//            throw new UsernameNotFoundException("Invalid user");
-//        }
-//        return customer;
-//    }
+    //reduce the balance of sender after the payment
+    int updateBalance(Double bal,Long transFrom){
+        return jdbcTemplate.update("update ACCOUNT set ACCOUNT_AVL_BALANCE=? where ACCOUNT_NUMBER=?",bal,transFrom);
+    }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Customer customer= getByUsername(username);
+        if(customer == null){
+            throw new UsernameNotFoundException("Invalid user");
+        }
+        return customer;
+    }
 
-//    public void incrementFailedAttempts(int id) {
-//        jdbcTemplate.update("update CUSTOMER set FAILED_ATTEMPTS = FAILED_ATTEMPTS + 1 where CUSTOMER_ID=?",id);
-//        jdbcTemplate.update("update CUSTOMER set CUSTOMER_STATUS='Inactive' where FAILED_ATTEMPTS=3");
-//    }
-
-    static class CustomersMapper implements RowMapper<Customer > {
+    class CustomersMapper implements RowMapper<Customer > {
         @Override
         public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
             Customer customer=new Customer();

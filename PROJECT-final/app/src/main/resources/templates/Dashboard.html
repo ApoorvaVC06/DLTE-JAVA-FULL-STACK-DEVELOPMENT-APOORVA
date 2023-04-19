@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,41 +10,89 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
-        var soapRequest="<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:soap=\"http://soap.app.project.bank\">\n"+
-            "<soapenv:Header/>\n"+
-            "<soapenv:Body>\n"+
-            "<soap:listPayeeRequest/>\n"+
-            "</soapenv:Body>\n"+
-            "</soapenv:Envelope>"
+        function payment() {
+          window.location.href="http://localhost:8083/web/pay"
+    }
+
+   function showPayee(user) {
+       var soapRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:soap=\"http://soap.app.project.bank\">\n" +
+           "<soapenv:Header/>\n" +
+           "<soapenv:Body>\n" +
+           "<soap:listPayeeRequest>\n" +
+           "<soap:username>" + user + "</soap:username>\n" +
+           "</soap:listPayeeRequest>\n" +
+           "</soapenv:Body>\n" +
+           "</soapenv:Envelope>"
+           $.ajax({
+               url: "http://localhost:8083/listpayee",
+               type: "POST",
+               dataType: "xml",
+//processData: false,
+               contentType: "text/xml;charset=\"UTF-8\"",
+               data: soapRequest,
+               success: (data) => {
+                   console.log((new XMLSerializer()).serializeToString(data));
+                   $(data).find('ns2\\:payee').each(function () {
+                       var payeeId = $(this).find('ns2\\:payeeId').text();
+                       var payeeName = $(this).find('ns2\\:payeeName').text();
+                       var payeeAccNum = $(this).find('ns2\\:payeeAccNum').text();
+                       var customerId = $(this).find('ns2\\:customerId').text();
+                       // var customerId = $(this).find('ns2\\:customerId').text();
+                       $("tbody").append("<tr><td>" + payeeId + "</td><td>" + payeeName + "</td><td>" + payeeAccNum + "</td><td>" + customerId + "</td><td><button type='button' class='btn btn-success' onclick='payment()'> Pay Now </button></td></tr>");
+                   });
+               },
+               error: () => {
+                   alert("error")
+               }
+           });
+           $("#transfer").click(() => {
+               window.location.href = "http://localhost:8083/web/pay"
+           })
+
+   }
         $(document).ready(()=>{
             $.ajax({
-                url: "http://localhost:8083/listpayee",
-                type: "POST",
-                dataType: "xml",
-//processData: false,
-                contentType: "text/xml;charset=\"UTF-8\"",
-                data: soapRequest,
-                success: (data) => {
-                    $(data).find('ns2\\:payee').each(function() {
-                        var payeeId = $(this).find('ns2\\:payeeId').text();
-                        var payeeName = $(this).find('ns2\\:payeeName').text();
-                        var payeeAccNum = $(this).find('ns2\\:payeeAccNum').text();
-                        var customerId = $(this).find('ns2\\:customerId').text();
-                        // var customerId = $(this).find('ns2\\:customerId').text();
-                        $("tbody").append("<tr><td>"+payeeId+"</td><td>"+payeeName+"</td><td>"+payeeAccNum+"</td><td>"+customerId+"</td></tr>");
-                    });
-
-
-                },
-                error:()=>{
-                    alert("error")
+                url: "http://localhost:8083/rest/username",
+                type: "GET",
+                success:(data) =>{
+                    showPayee(data)
                 }
-            });
-
-
-        })
-
+                  //  getUserDetails(data)
+                })
+            $("#add").click(() => {
+                window.location.href="http://localhost:8083/web/add"
+            })
+            $("#update").click(() => {
+                window.location.href="http://localhost:8083/web/update"
+            })
+            $("#fund").click(() => {
+                          console.log("Dashboard invoked")
+                           window.location.href="http://localhost:8083/web/pay"
+                           })
+            })
     </script>
+<!--    <script>-->
+<!--        $(document).ready(()=> {-->
+<!--            $("#update").click(() => {-->
+<!--                        window.location.href="http://localhost:8083/web/update"-->
+<!--                    })-->
+<!--        })-->
+<!--    </script>-->
+<!--    <script>-->
+<!--        $(document).ready(()=> {-->
+<!--            $("#fund").click(() => {-->
+<!--                console.log("Dashboard invoked")-->
+<!--                window.location.href="http://localhost:8083/web/pay"-->
+<!--            })-->
+<!--        })-->
+<!--    </script>-->
+<!--    <script>-->
+<!--        $(document).ready(()=> {-->
+<!--            $("#add").click(() => {-->
+<!--                window.location.href="http://localhost:8083/web/add"-->
+<!--            })-->
+<!--        })-->
+<!--    </script>-->
     <style>
         body{
             background: linear-gradient(45deg,lightgray,lightskyblue);
@@ -69,9 +117,13 @@
     </style>
 </head>
 <body>
+<div th:replace="Landing :: navbar">
+</div>
+
+
 <div class="=container">
-    <div class="d-flex justify-content-center">
-        <img  src="/images/Alpha_Bank_logo.svg.png" width="400px" height="100px">
+    <div class="d-flex text-align:center justify-content-center">
+        <img  th:src="@{/images/Alpha_Bank_logo.png}" width="400px" height="100px">
     </div>
     <div class="row">
         <div class="table-responsive mt-3 col-lg-6 ms-3">
@@ -83,6 +135,7 @@
                     <th>Payee Name</th>
                     <th>Account Number</th>
                     <th>Customer Id</th>
+                    <th>Option</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -90,15 +143,15 @@
                 </tbody>
             </table>
 
-            <button type="button" id="update" class="btn btn-outline-danger m-3">update</button>
-            <button type="button" id="fund" class="btn btn-outline-danger m-3">Transfer</button>
-            <button class="btn btn-outline-danger m-3">Add Payee</button>
+            <button type="button" id="update" class="btn btn-outline-danger m-3">update my Payee</button>
+            <button type="button" id="fund" class="btn btn-outline-danger m-3">Make a Payment</button>
+            <button type="button" id="add"  class="btn btn-outline-danger m-3">Add Payee</button>
         </div>
 
-        <div class="col-lg-4 mt-3 me-3">
+        <div class="col-lg-5 mt-3 me-3">
 
             <div class="card mt-4 h-70">
-                <h4 class="bg-light text-center rounded-5 m-2 shadow-lg">what's new</h4>
+                <h4 class="background-colour:white text-center rounded-5 m-2 shadow-lg">what's new</h4>
                 <marquee direction="up" scrollamount="3">
 
                     1.Pay your bills online through Bharat Bill Pay System (BBPS)<br>
@@ -111,6 +164,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 </body>
