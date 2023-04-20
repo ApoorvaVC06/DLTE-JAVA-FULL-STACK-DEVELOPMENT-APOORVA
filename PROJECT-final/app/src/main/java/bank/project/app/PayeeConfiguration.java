@@ -13,7 +13,7 @@ import org.springframework.xml.xsd.XsdSchema;
 
 @EnableWs
 @Configuration
-public class payeeConfig {
+public class PayeeConfiguration {
 
         @Bean(name = "payee")
         public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema payeeSchema){
