@@ -95,16 +95,11 @@
 
 </head>
 <body>
-
-<!-- <img th:src="@{/images/LOGO2.png}">
-<h1 class="title">UPDATE PAYEE </h1>
-<div class="container">
-
-<form class="child">
-<img th:src="@{/images/logo1.jpg}"> -->
+<!--Bank logo-->
 <div class="d-flex text-align:center justify-content-center">
     <img  th:src="@{/images/Alpha_Bank_logo.png}" width="400px" height="100px">
 </div>
+<!--Details of payee that can be updated-->
 <div class="grp">
     <labeL>PAYEE ID</labeL>
     <input type ="text" name="PayeeId" placeholder="ID">
@@ -124,11 +119,10 @@
     <labeL>CUSTOMER ID</labeL>
     <input type ="text" name="CustomerId" placeholder="CUSTOMER ID">
 </div>
+<!--Update button to modify the details of existing payee-->
 <div class="d-flex mt-4 row justify-content-around">
     <button type="button" id="btn1" class=" btn col-3 btn-success">UPDATE</button>
     <input type="reset" id="btn" class="btn col-3 btn-primary" value="Clear">
-    <!-- <button type="reset" id="btn2" class=" btn col-3 btn-primary">DELETE</button>-->
-
 </div>
 
 </form>

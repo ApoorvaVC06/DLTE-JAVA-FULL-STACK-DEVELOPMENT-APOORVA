@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,24 +28,35 @@ public class BankService implements BankOperations, UserDetailsService {
         return jdbcTemplate.query("select * from customer",new CustomersMapper());
     }
 
+    //to get the customer object using username
     @Override
     public Customer getByUsername(String username) {
-        Customer customer = jdbcTemplate.queryForObject("select * from Customer where username=?", new CustomersMapper(), username);
-        return customer;
+        try{
+            logger.info("Entered getByUsername() method");
+            Customer customer = jdbcTemplate.queryForObject("select * from Customer where username=?", new CustomersMapper(), username);
+            logger.info(customer.toString()+" has been returned to controller");
+            return customer;
+        }
+        catch (Exception e){
+            logger.error("Exception occured in getByUsername method: "+e);
+            return null;
+        }
     }
 
-    //Login service before adding secrity
+    //Login service before adding security
     @Override
     public String Login(String username, String password) {
         try {
             Customer customer = jdbcTemplate.queryForObject("select * from customer where username=?", new CustomersMapper(), username);
             if (customer == null)  {                                      // if it is null, return not exits
                 return resourceBundle.getString("notExist");
+                //logger.error(resourceBundle.getString("notExist"));
             }
             else {
                 logger.info(customer.getCustomer_name() + " Account status is " + customer.getCustomer_status());   //get the customer status
                 if (customer.getCustomer_status().equalsIgnoreCase("Inactive"))                   //if inactive, return inative
                     return resourceBundle.getString("deactivate");
+                    logger.error(resourceBundle.getString("deactivate"));
                 if (!password.equals(customer.getPassword())) {                                                //check for correct password
                      decrementAttempts(customer.getCustomer_id());
                      int attempts= getAttempts(customer.getCustomer_id());
@@ -79,50 +89,54 @@ public class BankService implements BankOperations, UserDetailsService {
     //get the number of login attempts left for the logged customer
     public int getAttempts(int id) {
         int attempts=jdbcTemplate.queryForObject("select attempts from customer where customer_id=?",Integer.class,id);
+        logger.info(attempts+" attempts are left to login");
         return attempts;
     }
     //decrement attempts for wrong credentials
     public void decrementAttempts(int id) {
        jdbcTemplate.update("update customer set attempts=attempts-1 where customer_id=?", id);
+       logger.info("1 attempt is decremented");
     }
 
 
     //set attempts as 3 for successful login
     public void setAttempts(int id) {
         jdbcTemplate.update("update customer set attempts=3 where customer_id=?",id);
+        logger.info("Attempts is set to 3 for successful login");
     }
 
 
-    //make satus as inactive after
+    //make status as inactive after 3 unsussessful login
     public void updateStatus() {
          jdbcTemplate.update("update customer set customer_status='Inactive' where attempts=0");
     }
 
 
-    //to get payee details from DB
+    //to get payee details from DB - SOAP service
     @Override
     public List<Payee> listPayee(String username){
-        logger.info(" Get by username ");
+        logger.info("Payees are about to be retrieved from table");
         return jdbcTemplate.query("Select * from payee join customer on customer.customer_id = payee.customer_id where customer.username=? ",new PayeeMapper(),username);
     }
 
 
-    //insert into Transaction table- make a new payment
+    //insert into Transaction table- make a new payment - REST service
     @Override
     public String newPayment(Transaction transaction){
-        String acknowledgment="Transaction successful in DB";
-//         logger.info(transaction.toString());
-//          Double balance= getbalance(transaction.getTransactionFrom());
-//         if (balance<transaction.getTransactionAmt()){              //check balance
-//             return resourceBundle.getString("noBalance");
-//         }
-//         else {
-//             Double newBalance=balance-transaction.getTransactionAmt();
+        String acknowledgment=resourceBundle.getString("transaction");
+         logger.info(transaction.toString());
+          Double balance= getbalance(transaction.getTransactionFrom());
+         if (balance<transaction.getTransactionAmt()){              //check balance
+             return resourceBundle.getString("noBalance");
+         }
+         else {
+  //           Double newBalance=balance-transaction.getTransactionAmt();
              jdbcTemplate.update("insert into transaction values(txn_id_seq.nextval,?,?,?,?,CURRENT_DATE )", new Object[]{transaction.getTransactionFrom(), transaction.getTransactionTo(), transaction.getTransactionAmt(), transaction.getTransactionStatus()});
+ //            logger.info("");
 //             updateBalance(newBalance,transaction.getTransactionFrom());        //update new balance
 //             if(ack!=1){
 //             return "Failed";}
-//         }
+         }
          return acknowledgment;
     }
 
@@ -146,13 +160,20 @@ public class BankService implements BankOperations, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Customer customer= getByUsername(username);
-        if(customer == null){
-            throw new UsernameNotFoundException("Invalid user");
+        logger.info("Entered loadByUsername() method");
+        Customer customer = getByUsername(username);
+
+        if (customer == null){
+            throw new UsernameNotFoundException(resourceBundle.getString("notExist"));
+        }
+        logger.info("Leaving loadByUsername() method");
+        if (customer.getCustomer_status().equalsIgnoreCase("inactive")){
+            throw new UsernameNotFoundException(resourceBundle.getString("deactivate"));
         }
         return customer;
     }
 
+    //retrieve customer object from DB
     class CustomersMapper implements RowMapper<Customer > {
         @Override
         public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -169,6 +190,7 @@ public class BankService implements BankOperations, UserDetailsService {
         }
     }
 
+    //retrieve payee object from DB
     class PayeeMapper implements RowMapper<Payee>{
 
         @Override
@@ -183,6 +205,7 @@ public class BankService implements BankOperations, UserDetailsService {
         }
     }
 
+    //retrieve Transaction object from DB
     class TransactionMapper implements RowMapper<Transaction>{
 
         @Override

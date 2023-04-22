@@ -36,33 +36,25 @@ public class PayeeEndPoints {
         public ListPayeeResponse listPayeeResponse(@RequestPayload ListPayeeRequest listPayeeRequest){
             ListPayeeResponse response=new ListPayeeResponse();
             ServiceStatus serviceStatus=new ServiceStatus();
-            //username=bankService.getByUsername(@RequestParam())
+
+            //create list for actual payee pojo
             List<Payee> payeeList =bankService.listPayee(listPayeeRequest.getUsername());// pojo objects
-             List<bank.project.app.soap.Payee> listxmlpayee=new ArrayList<>();// xml list of objects as of its empty
+
+            //create list for soap(xml) payee pojo
+            List<bank.project.app.soap.Payee> listxmlpayee=new ArrayList<>();// xml list of objects as of its empty
 
             Iterator<Payee> iterator= payeeList.iterator();
             while(iterator.hasNext()){
                 bank.project.app.soap.Payee payee = new bank.project.app.soap.Payee();// XSD POJO
+                //copy xsd objects to actual pojo
                 BeanUtils.copyProperties(iterator.next(),payee);
                 listxmlpayee.add(payee);
 
             }
-// response.setServiceStatus(serviceStatus);
             response.getPayee().addAll(listxmlpayee);
             logger.info(response.toString());
             return response;
 
         }
-// @PayloadRoot(namespace = url,localPart = "listPayeeRequest")
-// @ResponsePayload
-// public ListPayeeResponse listPayeeResponse(@RequestPayload ListPayeeRequest listPayeeRequest){
-//// logger.trace(listPayeeRequest.getId()+" received");
-// ListPayeeResponse response=new ListPayeeResponse();
-// service.bank.soap.Payee payee=new Payee();
-//
-// BeanUtils.copyProperties(bankService.getByUsername(listPayeeRequest.getUsername()),payee);
-// response.setPayee(payee);
-//
-// return response;
-//}
+
 }

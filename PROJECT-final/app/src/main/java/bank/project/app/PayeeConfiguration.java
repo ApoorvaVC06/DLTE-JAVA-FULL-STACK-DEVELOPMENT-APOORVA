@@ -19,11 +19,12 @@ public class PayeeConfiguration {
         public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema payeeSchema){
             DefaultWsdl11Definition schemaObject=new DefaultWsdl11Definition();
             schemaObject.setPortTypeName("PayeePort");
-            schemaObject.setTargetNamespace("http://soap.app.project.bank");
+            schemaObject.setTargetNamespace("http://soap.app.project.bank");     //tns url
             schemaObject.setLocationUri("/listpayee");
             schemaObject.setSchema(payeeSchema());
             return schemaObject;
         }
+        //create schema
         @Bean
         public XsdSchema payeeSchema(){
             return new SimpleXsdSchema(new ClassPathResource("Bank.xsd"));

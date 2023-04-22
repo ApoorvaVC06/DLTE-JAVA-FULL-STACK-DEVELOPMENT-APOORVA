@@ -10,10 +10,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
-        function payment() {
+        let payeeName
+        let payeeAccNum
+        function payment(name,account) {
+            sessionStorage.setItem("payeeName",name)
+            sessionStorage.setItem("payeeAccNum",account)
           window.location.href="http://localhost:8083/web/pay"
     }
 
+// ajax to list payess that belong to a particular customer who logged in
    function showPayee(user) {
        var soapRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:soap=\"http://soap.app.project.bank\">\n" +
            "<soapenv:Header/>\n" +
@@ -34,18 +39,22 @@
                    console.log((new XMLSerializer()).serializeToString(data));
                    $(data).find('ns2\\:payee').each(function () {
                        var payeeId = $(this).find('ns2\\:payeeId').text();
-                       var payeeName = $(this).find('ns2\\:payeeName').text();
-                       var payeeAccNum = $(this).find('ns2\\:payeeAccNum').text();
+                        payeeName = $(this).find('ns2\\:payeeName').text();
+                        payeeAccNum = $(this).find('ns2\\:payeeAccNum').text();
                        var customerId = $(this).find('ns2\\:customerId').text();
                        // var customerId = $(this).find('ns2\\:customerId').text();
-                       $("tbody").append("<tr><td>" + payeeId + "</td><td>" + payeeName + "</td><td>" + payeeAccNum + "</td><td>" + customerId + "</td><td><button type='button' class='btn btn-success' onclick='payment()'> Pay Now </button></td></tr>");
+                       $("tbody").append("<tr><td>" + payeeId + "</td><td>" + payeeName + "</td><td>" + payeeAccNum + "</td><td>" + customerId + "</td><td><button type='button' class='btn btn-success' onclick=\"payment('"+payeeName+"',"+payeeAccNum+")\"> Pay Now </button></td></tr>");
                    });
+
+
                },
                error: () => {
                    alert("error")
                }
            });
            $("#transfer").click(() => {
+              sessionStorage.setItem("payeeName",payeeName)
+               sessionStorage.setItem("payeeAccNum",payeeAccNum)
                window.location.href = "http://localhost:8083/web/pay"
            })
 
@@ -69,40 +78,17 @@
                           console.log("Dashboard invoked")
                            window.location.href="http://localhost:8083/web/pay"
                            })
-            })
+        })
     </script>
-<!--    <script>-->
-<!--        $(document).ready(()=> {-->
-<!--            $("#update").click(() => {-->
-<!--                        window.location.href="http://localhost:8083/web/update"-->
-<!--                    })-->
-<!--        })-->
-<!--    </script>-->
-<!--    <script>-->
-<!--        $(document).ready(()=> {-->
-<!--            $("#fund").click(() => {-->
-<!--                console.log("Dashboard invoked")-->
-<!--                window.location.href="http://localhost:8083/web/pay"-->
-<!--            })-->
-<!--        })-->
-<!--    </script>-->
-<!--    <script>-->
-<!--        $(document).ready(()=> {-->
-<!--            $("#add").click(() => {-->
-<!--                window.location.href="http://localhost:8083/web/add"-->
-<!--            })-->
-<!--        })-->
-<!--    </script>-->
-    <style>
-        body{
-            background: linear-gradient(45deg,lightgray,lightskyblue);
-        }
-    </style>
+
     <style>
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 100%;
+        }
+        body{
+            background: linear-gradient(45deg,lightgray,lightskyblue);
         }
 
         td, th {
@@ -144,12 +130,11 @@
             </table>
 
             <button type="button" id="update" class="btn btn-outline-danger m-3">update my Payee</button>
-            <button type="button" id="fund" class="btn btn-outline-danger m-3">Make a Payment</button>
             <button type="button" id="add"  class="btn btn-outline-danger m-3">Add Payee</button>
         </div>
 
         <div class="col-lg-5 mt-3 me-3">
-
+<!--            marquee beside the payee's table-->
             <div class="card mt-4 h-70">
                 <h4 class="background-colour:white text-center rounded-5 m-2 shadow-lg">what's new</h4>
                 <marquee direction="up" scrollamount="3">

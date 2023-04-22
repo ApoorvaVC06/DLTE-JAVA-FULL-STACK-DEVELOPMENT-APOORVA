@@ -10,6 +10,8 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
+//transaction POJO
 public class Transaction {
     private int transactionId;
     private Long transactionFrom;

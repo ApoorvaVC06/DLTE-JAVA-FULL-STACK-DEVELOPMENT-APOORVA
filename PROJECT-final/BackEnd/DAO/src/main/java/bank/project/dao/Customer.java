@@ -13,6 +13,8 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
+//Customer POJO
 public class Customer implements UserDetails {
     private int customer_id;
     private String customer_name;

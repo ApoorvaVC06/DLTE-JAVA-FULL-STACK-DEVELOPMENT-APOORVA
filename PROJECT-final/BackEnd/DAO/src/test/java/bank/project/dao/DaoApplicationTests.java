@@ -30,7 +30,7 @@ private Logger logger= LoggerFactory.getLogger(DaoApplicationTests.class);    //
 
     //test to add a new Transaction- REST service
     @Test
-        void testinsert() throws ParseException {
+        void newPaymentTest() throws ParseException {
         Transaction transaction1=new Transaction(9876,43239696L,06765L,7676.98f,"fail",new Date());
         Transaction transaction2=new Transaction(9876,076545L,0656L,86567.8f,"Succes",new Date());
         when(jdbcTemplate.update(eq("insert into transaction values(txn_id_seq.nextval,?,?,?,?,CURRENT_DATE )"), eq(new Object[]{transaction1.getTransactionFrom(), transaction1.getTransactionTo(), transaction1.getTransactionAmt(), transaction1.getTransactionStatus()}))).thenReturn(1);
@@ -39,7 +39,7 @@ private Logger logger= LoggerFactory.getLogger(DaoApplicationTests.class);    //
 
     //test to list payees -SOAP service
     @Test
-    void testListPayees(){
+    void listPayeesTest(){
         Payee payee1=new Payee(87,"Gourav",87654567L,2);
         Payee payee2=new Payee(88,"Abhihsek",765456L,2);
         Payee payee3=new Payee(89,"Kirthan",789L,2);
@@ -53,7 +53,7 @@ private Logger logger= LoggerFactory.getLogger(DaoApplicationTests.class);    //
 
     //Login testing
     @Test
-    void testLogin(){
+    void LoginTest(){
         Customer customer3 = new Customer(1, "Apoorva", "Banglore", "active", 234543L, "appu", "appu12", 1);
         Customer customer4 = new Customer(2, "Anusha", "Manglore", "inactive", 76545L, "anu", "anu12", 0);
         List<Customer> customerlist= Stream.of(customer3,customer4).collect(Collectors.toList());
@@ -65,7 +65,7 @@ private Logger logger= LoggerFactory.getLogger(DaoApplicationTests.class);    //
 
     //test to get a customer object
     @Test
-    void testGetByusername(){
+    void getCutomerByUsernameTest(){
         Customer customer1=new Customer(1,"Apoorva","Banglore","active",234543L,"appu","appu12",1);
         Customer customer2=new Customer(2,"Anusha","Manglore","inactive",76545L,"anu","anu12",0);
         Customer customer5=new Customer(2,"karthik","ballari","active",76545L,"karthi","karthi12",3);
@@ -78,7 +78,7 @@ private Logger logger= LoggerFactory.getLogger(DaoApplicationTests.class);    //
 
     //test to list transcation
     @Test
-    void testListTransactions(){
+    void ListTransactionsTest(){
         Transaction transaction1=new Transaction(9876,43239696L,06765L,7676.98f,"fail",new Date());
         Transaction transaction2=new Transaction(9876,076545L,0656L,86567.8f,"Succes",new Date());
         Transaction transaction3=new Transaction(8765,86543L,9654L,70876.98f,"Scuccess",new Date());

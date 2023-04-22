@@ -18,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class BankSecurity {
 
+//autowire service class, success and failure handlers
 @Autowired
 BankService bankService;
 
@@ -37,6 +38,7 @@ public PasswordEncoder passwordEncoder(){
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests((requests)->{
+                //authorize only for following requests
                 requests.antMatchers("/resources/static/images/**").permitAll();
                 requests.antMatchers("/web/login").permitAll();
                 requests.antMatchers("/web/dash").authenticated();
@@ -51,7 +53,6 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
         builder.userDetailsService(bankService);
         authenticationManager=builder.build();
         httpSecurity.authenticationManager(authenticationManager);
-
         return httpSecurity.build();
         }
 }
