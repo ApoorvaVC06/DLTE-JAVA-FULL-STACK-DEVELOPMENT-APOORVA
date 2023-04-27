@@ -36,7 +36,6 @@ public class PayeeEndPoints {
         public ListPayeeResponse listPayeeResponse(@RequestPayload ListPayeeRequest listPayeeRequest){
             ListPayeeResponse response=new ListPayeeResponse();
             ServiceStatus serviceStatus=new ServiceStatus();
-
             //create list for actual payee pojo
             List<Payee> payeeList =bankService.listPayee(listPayeeRequest.getUsername());// pojo objects
 

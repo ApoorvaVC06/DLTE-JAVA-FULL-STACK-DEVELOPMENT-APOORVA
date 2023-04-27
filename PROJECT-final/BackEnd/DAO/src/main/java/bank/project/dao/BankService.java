@@ -3,7 +3,6 @@ package bank.project.dao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,48 +42,7 @@ public class BankService implements BankOperations, UserDetailsService {
         }
     }
 
-    //Login service before adding security
-    @Override
-    public String Login(String username, String password) {
-        try {
-            Customer customer = jdbcTemplate.queryForObject("select * from customer where username=?", new CustomersMapper(), username);
-            if (customer == null)  {                                      // if it is null, return not exits
-                return resourceBundle.getString("notExist");
-                //logger.error(resourceBundle.getString("notExist"));
-            }
-            else {
-                logger.info(customer.getCustomer_name() + " Account status is " + customer.getCustomer_status());   //get the customer status
-                if (customer.getCustomer_status().equalsIgnoreCase("Inactive"))                   //if inactive, return inative
-                    return resourceBundle.getString("deactivate");
-                    logger.error(resourceBundle.getString("deactivate"));
-                if (!password.equals(customer.getPassword())) {                                                //check for correct password
-                     decrementAttempts(customer.getCustomer_id());
-                     int attempts= getAttempts(customer.getCustomer_id());
-                      if(attempts==2) {
-                          logger.info(resourceBundle.getString("two"));
-                          return resourceBundle.getString("wrongPass");
-                      }
-                      else if(attempts==1){
-                          logger.info(resourceBundle.getString("one"));
-                          return resourceBundle.getString("wrongPass");
-                      }
-                      else{
-                          updateStatus();
-                          logger.info(resourceBundle.getString("notExist"));
-                          return resourceBundle.getString("notExist");
-                      }
-                }
-                else {
-                    setAttempts(customer.getCustomer_id());
-                    return resourceBundle.getString("success");
-                }
-            }
-        }
-        catch (DataAccessException e){
-            logger.info("from dao");
-            return resourceBundle.getString("notExist");
-        }
-    }
+
 
     //get the number of login attempts left for the logged customer
     public int getAttempts(int id) {
@@ -92,6 +50,7 @@ public class BankService implements BankOperations, UserDetailsService {
         logger.info(attempts+" attempts are left to login");
         return attempts;
     }
+
     //decrement attempts for wrong credentials
     public void decrementAttempts(int id) {
        jdbcTemplate.update("update customer set attempts=attempts-1 where customer_id=?", id);
@@ -111,6 +70,9 @@ public class BankService implements BankOperations, UserDetailsService {
          jdbcTemplate.update("update customer set customer_status='Inactive' where attempts=0");
     }
 
+    public void resetStatus(int id) {
+        jdbcTemplate.update("update customer set customer_status='active' where customer_id=?",id);
+    }
 
     //to get payee details from DB - SOAP service
     @Override
@@ -130,12 +92,8 @@ public class BankService implements BankOperations, UserDetailsService {
              return resourceBundle.getString("noBalance");
          }
          else {
-  //           Double newBalance=balance-transaction.getTransactionAmt();
              jdbcTemplate.update("insert into transaction values(txn_id_seq.nextval,?,?,?,?,CURRENT_DATE )", new Object[]{transaction.getTransactionFrom(), transaction.getTransactionTo(), transaction.getTransactionAmt(), transaction.getTransactionStatus()});
- //            logger.info("");
-//             updateBalance(newBalance,transaction.getTransactionFrom());        //update new balance
-//             if(ack!=1){
-//             return "Failed";}
+
          }
          return acknowledgment;
     }
@@ -153,10 +111,6 @@ public class BankService implements BankOperations, UserDetailsService {
        return jdbcTemplate.queryForObject("select ACCOUNT_AVL_BALANCE from ACCOUNT where account_number=?",Double.class,transFrom);
     }
 
-    //reduce the balance of sender after the payment
-    int updateBalance(Double bal,Long transFrom){
-        return jdbcTemplate.update("update ACCOUNT set ACCOUNT_AVL_BALANCE=? where ACCOUNT_NUMBER=?",bal,transFrom);
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -201,6 +155,7 @@ public class BankService implements BankOperations, UserDetailsService {
             payee.setPayeeAccNum(rs.getLong("payee_account_number"));
             payee.setCustomerId(rs.getInt("customer_id"));
             logger.info(payee.getPayeeName()+" details received from payee table");
+            logger.info(String.valueOf(payee));
             return payee;
         }
     }
@@ -218,6 +173,7 @@ public class BankService implements BankOperations, UserDetailsService {
             transaction.setTransactionStatus(rs.getString("txn_status"));
             transaction.setTransactionDate(rs.getDate("trans_date"));
             logger.info(" details received from transaction table");
+            logger.info(String.valueOf(transaction));
             return transaction;
         }
     }

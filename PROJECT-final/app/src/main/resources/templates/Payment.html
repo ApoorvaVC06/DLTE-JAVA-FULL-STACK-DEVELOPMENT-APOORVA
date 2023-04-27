@@ -13,14 +13,26 @@
     <script>
 // method to make a new transction
         function Transfer(){
-            $.post("http://localhost:8083/rest/insert", {
-                Fullname: $("input[name=fname]").val(),
-                Payeeacc: $("input[name=payeeaccnum]").val(),
-                Accnum: $("input[name=accnum]").val(),
-                Amount: $("input[name=amount]").val()
-            },function (data) {
-                alert(data)
-            })
+            Accnum = $("input[name=accnum]").val()
+            Amount = $("input[name=amount]").val()
+            try{
+                if(Accnum==="" || Amount===""){
+                    throw "All fields are mandatory"
+                }
+                else {
+                    $.post("http://localhost:8083/rest/insert", {
+                        Fullname: $("input[name=fname]").val(),
+                        Payeeacc: $("input[name=payeeaccnum]").val(),
+                        Accnum: $("input[name=accnum]").val(),
+                        Amount: $("input[name=amount]").val()
+                    },function (data) {
+                        alert(data)
+                    })
+                }
+            }
+            catch(errmsg){
+                $("#responseMessage").append("<div class='row justify-content-center bg-danger-subtle text-danger rounded-4 p-2 ms-3 me-3 mb-1' id='error'><p class='text-center'>"+errmsg+"</p></div>")
+            }
         }
 
 //validation for payment form
@@ -28,7 +40,7 @@
             $('#accnum').on('input', function () {
                 console.log("Entered Account number validation")
                 var account = $(this).val();
-                var validNumber = /^[0-9]{12}$/;
+                var validNumber = /^[0-9]{13}$/;
                 if (account.length == 0) {
                     $('.accountNum').addClass('invalid-msg').text("Account number is required");
                     $(this).addClass('invalid-input').removeClass('valid-input');
@@ -47,13 +59,25 @@
                 console.log("Entered Amount validation")
                 var amt = $(this).val();
                 var validNumber = /^[0-9]{10}$/;
-                if (account.length == 0) {
+                if (amt.length == 0) {
                     $('.fund').addClass('invalid-msg').text("Please enter the amount");
                     $(this).addClass('invalid-input').removeClass('valid-input');
                 }
                 else {
                     $('.fund').empty();
                     $(this).addClass('valid-input').removeClass('invalid-input');
+                }
+            });
+            $('input').on('input',function(e){
+                if($('#paymentForm').find('.valid-input').length==2){
+                    console.log("Entered validation")
+                    $('#pay').removeClass('allowed-submit');
+                    $('#pay').removeAttr('disabled');
+                }
+                else{
+                    e.preventDefault();
+                    $('#pay').attr('disabled','disabled')
+
                 }
             });
 
@@ -127,7 +151,7 @@
 <div class="container">
 <!--form to make a new transction includes name, 2 account numbers and amount , send button-->
     <div class="row justify-content-center mt-4">
-        <form class="width-50 ">
+        <form class="width-50" id="paymentForm">
             <div class="col-50">
                 <h3 class="text-center">Payment Form</h3>
 <!--  Payee name-->
@@ -135,15 +159,16 @@
                 <input type="text" name="fname" disabled/>
 <!-- Payee account number-->
                 <label class="required"><i class="fa fa-credit-card"></i> PAYEE Account number</label>
-                <input type="text" name="payeeaccnum" placeholder="8767-7656-7656" minlength="12" disabled/>
+                <input type="text" name="payeeaccnum" minlength="12" disabled/>
 <!--My account nuber(transaction from)-->
                 <label class="required"><i class="fa fa-address-card-o"></i> MY Account number</label>
-                <input type="text" id="accnum" name="accnum"  placeholder="3647-9243-2343" minlength="12" />
+                <input type="number" id="accnum" name="accnum"  placeholder="3647-9243-2343" minlength="12" required="required">
                 <p class="accountNum text-danger"></p>
 <!--Amount to be sent-->
                 <label class="required"><i class="fa fa-money"></i> Amount</label>
-                <input type="text" id="amount"  name="amount" placeholder="amount" required/>
+                <input type="text" id="amount"  name="amount" placeholder="amount" required="required">
                 <p class="fund text-danger"></p>
+                <div id="responseMessage"></div>
 
             </div>
 <!--            <div id="responseMessage"></div>-->

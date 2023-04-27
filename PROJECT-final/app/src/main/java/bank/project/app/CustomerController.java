@@ -38,12 +38,12 @@ public class CustomerController {
        logger.info("Customer account status received");
        return status;}
 
-   //authenicate user (without security)
-    @PostMapping("/authenticate")
-    public String login(@RequestParam("userName") String username,@RequestParam("passWord") String password) {
-        logger.info("parameters received from page for "+username);
-        return bankService.Login(username,password);     //get the whole object
-    }
+//   //authenicate user (without security)
+//    @PostMapping("/authenticate")
+//    public String login(@RequestParam("userName") String username,@RequestParam("passWord") String password) {
+//        logger.info("parameters received from page for "+username);
+//        return bankService.Login(username,password);     //get the whole object
+//    }
 
     //to get the username from login page to dashboard
     @GetMapping("/username")
@@ -53,16 +53,17 @@ public class CustomerController {
 
    //url to make a new transaction
     @PostMapping("/insert")
-    public String addTranscation(@RequestParam("Payeeacc") Long payeeaccno,@RequestParam("Accnum") Long accnum,@RequestParam("Amount") Float amount) throws ParseException {
+    public String addTranscation(@RequestParam("Payeeacc") Long payeeAccNo,@RequestParam("Accnum") Long accNum,@RequestParam("Amount") Float amount) throws ParseException {
        logger.info("Adding a new transcation ");
         Transaction transaction=new Transaction();
-        transaction.setTransactionFrom(accnum);
-        transaction.setTransactionTo(payeeaccno);
+        transaction.setTransactionFrom(accNum);
+        transaction.setTransactionTo(payeeAccNo);
         transaction.setTransactionAmt(amount);
         transaction.setTransactionStatus("successful");
-       // transaction.setTransactionDate(String.valueOf(date));
-        //logger.info("trying to make a new payment");
-        return bankService.newPayment(transaction);
+        if(transaction.getTransactionAmt()>0){
+        return bankService.newPayment(transaction);}
+        else
+            return "Invalid amount";
     }
 
     //to list the tranactions of the logged customer

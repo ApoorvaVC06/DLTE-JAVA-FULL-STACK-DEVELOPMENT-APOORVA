@@ -30,17 +30,13 @@ public class CustomerLoginSuccessHandler extends SimpleUrlAuthenticationSuccessH
        Customer customer= (Customer) authentication.getPrincipal();
      ResourceBundle bundle=ResourceBundle.getBundle("Alphabank");
 
-         if(customer.getCustomer_status().equalsIgnoreCase("active")){
              bankService.getByUsername(customer.getUsername());
              logger.info("success");
+             bankService.setAttempts(customer.getCustomer_id());
+             int attempts=customer.getAttempts();
+             logger.info(String.valueOf(attempts));
+             bankService.resetStatus(customer.getCustomer_id());
              super.setDefaultTargetUrl("/web/dash");
-
-         }
-         else{
-             logger.info(bundle.getString("deactivate"));
-             super.setTargetUrlParameter("login/logout?error="+bundle.getString("deactivate"));
-             super.setDefaultTargetUrl("/logout");
-         }
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }
